@@ -36,10 +36,11 @@ setup(
     description='Thread executor for Python3',
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
+    keywords = ['Threads', 'PoolThreads', 'thread'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: POSIX ",
-        "License :: OSI Approved :: Apache Software License",
+        'License :: OSI Approved :: MIT License',
         "Development Status :: 5 - Production/Stable"
     ],
 )
