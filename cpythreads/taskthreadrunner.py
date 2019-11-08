@@ -5,17 +5,17 @@ from time import sleep
 from abc import ABC, abstractmethod
 
 
-class ThreadRunnable(ABC):
+class TaskRunnable(ABC):
     @abstractmethod
     def run(self):
         ...
 
 
-class ThreadRunner(threading.Thread):
+class TaskThreadRunner(threading.Thread):
     TOTAL_THREADS = 0
 
     def __init__(self, queue: Queue, group=None, target=None, name=None):
-        super(ThreadRunner, self).__init__(
+        super(TaskThreadRunner, self).__init__(
             group=group,
             target=target,
             name=name
@@ -23,7 +23,7 @@ class ThreadRunner(threading.Thread):
         self.queue = queue
         self.killed = False
         self._is_busy = False
-        ThreadRunner.TOTAL_THREADS += 1
+        TaskThreadRunner.TOTAL_THREADS += 1
 
     def kill(self):
         self.killed = True
@@ -42,11 +42,11 @@ class ThreadRunner(threading.Thread):
                 break
             if not self.queue.empty():
                 self._is_busy = True
-                class_runnable: ThreadRunnable = self.queue.get()
+                class_runnable: TaskRunnable = self.queue.get()
                 class_runnable.run()
                 self._is_busy = False
             else:
                 sleep(1)
 
     def __del__(self):
-        ThreadRunner.TOTAL_THREADS -= 1
+        TaskThreadRunner.TOTAL_THREADS -= 1

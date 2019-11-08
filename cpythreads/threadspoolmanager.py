@@ -1,14 +1,24 @@
 from queue import Queue
 import time
-from cpythreads.threadrunner import ThreadRunner, ThreadRunnable
+from cpythreads.taskthreadrunner import TaskThreadRunner, TaskRunnable
 
 
 class ThreadsPoolManager:
 
-    def __init__(self, max_threads):
+    def __init__(
+            self,
+            max_threads,
+            start_all_threads=False,
+    ):
         self.max_threads = max_threads
         self.task_queue = Queue()
         self.threads_pool = []
+        if start_all_threads:
+            self.__init_all_threads()
+
+    def __init_all_threads(self):
+        for _ in range(self.max_threads):
+            self.add_thread_to_pool()
 
     def kill_threads_on_finish(self, *args, **kwargs):
         """
@@ -26,7 +36,7 @@ class ThreadsPoolManager:
             thread.join()
 
     def add_thread_to_pool(self):
-        thread = ThreadRunner(self.task_queue)
+        thread = TaskThreadRunner(self.task_queue)
         thread.setDaemon(True)
         thread.start()
         self.threads_pool.append(thread)
@@ -38,6 +48,6 @@ class ThreadsPoolManager:
                     return
             self.add_thread_to_pool()
 
-    def add_task(self, task: ThreadRunnable):
+    def add_task(self, task: TaskRunnable):
         self.task_queue.put(task)
         self.add_thread_if_needed()
