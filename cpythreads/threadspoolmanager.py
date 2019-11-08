@@ -1,7 +1,6 @@
 from queue import Queue
 import time
-from cpythreads.threadrunnable import ThreadRunnable
-from cpythreads.threadrunner import ThreadRunner
+from cpythreads.threadrunner import ThreadRunner, ThreadRunnable
 
 
 class ThreadsPoolManager:

@@ -1,20 +1,25 @@
 import threading
 from queue import Queue
-from sonarqube_reviewer.threads.threadrunnable import ThreadRunnable
 import logging
 from time import sleep
+from abc import ABC, abstractmethod
+
+
+class ThreadRunnable(ABC):
+    @abstractmethod
+    def run(self):
+        ...
 
 
 class ThreadRunner(threading.Thread):
     TOTAL_THREADS = 0
 
-    def __init__(self, queue: Queue, group=None, target=None, name=None, verbose=None):
+    def __init__(self, queue: Queue, group=None, target=None, name=None):
         super(ThreadRunner, self).__init__(
             group=group,
             target=target,
             name=name
         )
-        self.verbose = verbose
         self.queue = queue
         self.killed = False
         self._is_busy = False

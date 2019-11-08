@@ -26,12 +26,12 @@ def get_version_from_tag():
 
 
 setup(
-    name='crecaptcha',
+    name='cpythreads',
     version=get_version_from_tag(),
     author='Steib Cristian',
     author_email='cristiansteib@gmail.com',
     packages=['cpythreads'],
-    url='https://github.com/cristiansteib/crecaptcha/',
+    url='https://github.com/cristiansteib/cpythreads/',
     license='LICENSE.txt',
     description='Thread executor for Python3',
     long_description=open('README.md').read(),
