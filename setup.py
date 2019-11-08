@@ -16,7 +16,7 @@ def get_version_from_tag():
     )
     regexp = re.compile(r'^[0-9]*(\.[0-9]+)*$')
     while True:
-        line = tag.stdout.readline().rstrip()
+        line = tag.stdout.readline().decode().rstrip()
         if line:
             if regexp.match(line):
                 return line
